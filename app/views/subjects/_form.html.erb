@@ -20,10 +20,16 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
+    <%= f.label :parent_subject_id %><br>
+    <%= f.text_field :parent_subject_id %>
+  </div>
+  <div class="field">
+    <%= f.label :level %><br>
+    <%= f.number_field :level %>
+  </div>
+  <div class="field">
     <%= f.label :subject_type %><br>
-    <!--<%= f.text_field :subject_type %>-->
-    <%= f.select :subject_type, Subject::SUBJECT_TYPES,prompt: 'Select a type' %>
-    
+    <%= f.number_field :subject_type %>
   </div>
   <div class="actions">
     <%= f.submit %>

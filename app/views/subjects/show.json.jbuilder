@@ -1,1 +1,1 @@
-json.extract! @subject, :id, :name, :description, :subject_type, :created_at, :updated_at
+json.extract! @subject, :id, :name, :description, :parent_subject_id, :level, :subject_type, :created_at, :updated_at

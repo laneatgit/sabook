@@ -7,6 +7,8 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Parent subject</th>
+      <th>Level</th>
       <th>Subject type</th>
       <th colspan="3"></th>
     </tr>
@@ -17,6 +19,8 @@
       <tr>
         <td><%= subject.name %></td>
         <td><%= subject.description %></td>
+        <td><%= subject.parent_subject %></td>
+        <td><%= subject.level %></td>
         <td><%= subject.subject_type %></td>
         <td><%= link_to 'Show', subject %></td>
         <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
