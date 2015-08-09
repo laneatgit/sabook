@@ -12,13 +12,9 @@
 
 <p>
   <strong>Parent subject:</strong>
-  <%= @subject.parent_subject %>
+  <%= display_name(@subject.parent_subject) %>
 </p>
 
-<p>
-  <strong>Level:</strong>
-  <%= @subject.level %>
-</p>
 
 <p>
   <strong>Subject type:</strong>
@@ -27,3 +23,4 @@
 
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>
+<%= link_to 'Destroy', @subject, method: :delete, data: { confirm: 'Are you sure?' } %>
