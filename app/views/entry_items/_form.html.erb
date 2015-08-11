@@ -1,0 +1,41 @@
+<%= form_for(@entry_item) do |f| %>
+  <% if @entry_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@entry_item.errors.count, "error") %> prohibited this entry_item from being saved:</h2>
+
+      <ul>
+      <% @entry_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :entry_date %><br>
+    <%= f.date_select :entry_date %>
+  </div>
+  <div class="field">
+    <%= f.label :explanation %><br>
+    <%= f.text_area :explanation %>
+  </div>
+  <div class="field">
+    <%= f.label :credit_subject_id %><br>
+    <%= f.text_field :credit_subject_id %>
+  </div>
+  <div class="field">
+    <%= f.label :credit_amount %><br>
+    <%= f.number_field :credit_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :debit_subject_id %><br>
+    <%= f.text_field :debit_subject_id %>
+  </div>
+  <div class="field">
+    <%= f.label :debit_amount %><br>
+    <%= f.number_field :debit_amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

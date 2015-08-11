@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Entry date:</strong>
+  <%= @entry_item.entry_date %>
+</p>
+
+<p>
+  <strong>Explanation:</strong>
+  <%= @entry_item.explanation %>
+</p>
+
+<p>
+  <strong>Credit subject:</strong>
+  <%= @entry_item.credit_subject %>
+</p>
+
+<p>
+  <strong>Credit amount:</strong>
+  <%= @entry_item.credit_amount %>
+</p>
+
+<p>
+  <strong>Debit subject:</strong>
+  <%= @entry_item.debit_subject %>
+</p>
+
+<p>
+  <strong>Debit amount:</strong>
+  <%= @entry_item.debit_amount %>
+</p>
+
+<%= link_to 'Edit', edit_entry_item_path(@entry_item) %> |
+<%= link_to 'Back', entry_items_path %>

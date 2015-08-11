@@ -1,0 +1,44 @@
+<h1><%= @subject.name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>用途</th>
+      <th>相手科目</th>
+      <%if @subject.subject_type == "流動資産"%>
+          <th>入金</th>
+          <th>出金</th>
+      <%elsif @subject.subject_type == "支出"%>
+          <th>費用</th>
+          <th>割引</th>
+      <%elsif @subject.subject_type == "収入"%>
+          <th>割引</th>
+          <th>収入</th>
+      <%else%>
+          <% raise "wrong subject type"%>
+      <%end%>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entry_items.each do |entry_item| %>
+      <tr>
+        <td><%= entry_item.entry_date %></td>
+        <td><%= entry_item.explanation %></td>
+        <%if entry_item.credit_subject.id == @subject.id %>
+            <td><%= entry_item.debit_subject.name %></td>
+            <td><%= entry_item.credit_amount %></td>
+            <td>0</td>
+        <%else%>
+            <td><%= entry_item.credit_subject.name %></td>
+            <td>0</td>
+            <td><%= entry_item.debit_amount %></td>
+        <%end%>
+        
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>

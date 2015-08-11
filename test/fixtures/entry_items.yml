@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entry_date: 2015-08-11
+  explanation: MyText
+  credit_subject_id: 
+  credit_amount: 1
+  debit_subject_id: 
+  debit_amount: 1
+
+two:
+  entry_date: 2015-08-11
+  explanation: MyText
+  credit_subject_id: 
+  credit_amount: 1
+  debit_subject_id: 
+  debit_amount: 1

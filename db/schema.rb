@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808140259) do
+ActiveRecord::Schema.define(version: 20150811074009) do
+
+  create_table "entry_items", force: :cascade do |t|
+    t.date     "entry_date"
+    t.text     "explanation"
+    t.integer  "credit_subject_id"
+    t.integer  "credit_amount"
+    t.integer  "debit_subject_id"
+    t.integer  "debit_amount"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "entry_items", ["credit_subject_id"], name: "index_entry_items_on_credit_subject_id"
+  add_index "entry_items", ["debit_subject_id"], name: "index_entry_items_on_debit_subject_id"
 
   create_table "subjects", force: :cascade do |t|
     t.string   "name"

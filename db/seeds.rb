@@ -5,8 +5,9 @@ Subject.delete_all
 ########################
 # 流動資産
 ########################
-Subject.create!(name: '銀行口座',  level:1, subject_type: '流動資産')
-Subject.create!(name: 'お財布',  level:1, subject_type: '流動資産')
+c = Subject.create!(name: '銀行口座',  level:1, subject_type: '流動資産')
+subject_mitsui = Subject.create!(name:'三井住友銀行',parent_subject:c, level:2, subject_type: '流動資産')
+subject_cash_bag = Subject.create!(name: 'お財布',  level:1, subject_type: '流動資産')
 
 ########################
 # 支出
@@ -82,7 +83,7 @@ Subject.create!(name:'その他税・社会保障',parent_subject:c, level:2, su
 #日用品 
 #日用品 ドラッグストア おこづかい   ペット 子育て その他日用品  タバコ 
 c = Subject.create!(name: '日用品',  level:1, subject_type: '支出') 
-Subject.create!(name:'日用品',parent_subject:c, level:2, subject_type: '支出')
+subject_daily_necessities = Subject.create!(name:'日用品',parent_subject:c, level:2, subject_type: '支出')
 Subject.create!(name:'ドラッグストア',parent_subject:c, level:2, subject_type: '支出')
 Subject.create!(name:'おこづかい',parent_subject:c, level:2, subject_type: '支出') 
 Subject.create!(name:'ペット',parent_subject:c, level:2, subject_type: '支出') 
@@ -175,7 +176,7 @@ Subject.create!(name:'寄付金',parent_subject:c, level:2, subject_type: '支�
 ########################
 #収入  給与  一時所得    事業・副業   年金  その他入金   配当所得    不動産所得  
 c = Subject.create!(name: '収入',  level:1, subject_type: '収入') 
-Subject.create!(name:'給与',parent_subject:c, level:2, subject_type: '収入')
+subject_salary = Subject.create!(name:'給与',parent_subject:c, level:2, subject_type: '収入')
 Subject.create!(name:'一時所得',parent_subject:c, level:2, subject_type: '収入')
 Subject.create!(name:'事業・副業',parent_subject:c, level:2, subject_type: '収入') 
 Subject.create!(name:'年金',parent_subject:c, level:2, subject_type: '収入')
@@ -183,3 +184,24 @@ Subject.create!(name:'その他入金',parent_subject:c, level:2, subject_type: 
 Subject.create!(name:'配当所得',parent_subject:c, level:2, subject_type: '収入') 
 Subject.create!(name:'不動産所得',parent_subject:c, level:2, subject_type: '収入') 
 
+########################
+# 勘定元帳
+########################
+
+EntryItem.delete_all
+
+EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping',credit_subject:subject_daily_necessities, credit_amount:1000, debit_subject:subject_cash_bag, debit_amount:1000)
+# ledgers/index?subject_id=1　　(お財布)
+#       entry_date    explanation     contra_subject  credit_amount   debit_amount
+#       2015/8/1,     'go shopping',  日常品,           0                1,000
+# ledgers/index?subject_id=2　　(日常品)
+#       entry_date    explanation     contra_subject  credit_amount   debit_amount
+#       2015/8/1,     'go shopping',  お財布,           1,000             0
+
+EntryItem.create!(entry_date:DateTime.strptime('20150802', '%Y%m%d'), explanation:'bonus',credit_subject:subject_mitsui, credit_amount:100000, debit_subject:subject_salary, debit_amount:100000)    
+# ledgers/index?subject_id=3　　(三井住友銀行)
+#       entry_date    explanation     contra_subject  credit_amount   debit_amount
+#       2015/8/2,     'bonus',        給料,           　100,000           0
+# ledgers/index?subject_id=4　　(給料)
+#       entry_date    explanation     contra_subject  credit_amount   debit_amount
+#       2015/8/2,     'bonus',        三井住友銀行,      　0                100,000
