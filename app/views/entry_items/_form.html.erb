@@ -19,22 +19,29 @@
     <%= f.label :explanation %><br>
     <%= f.text_area :explanation %>
   </div>
-  <div class="field">
-    <%= f.label :credit_subject_id %><br>
-    <%= f.text_field :credit_subject_id %>
-  </div>
-  <div class="field">
-    <%= f.label :credit_amount %><br>
-    <%= f.number_field :credit_amount %>
-  </div>
-  <div class="field">
-    <%= f.label :debit_subject_id %><br>
-    <%= f.text_field :debit_subject_id %>
-  </div>
-  <div class="field">
-    <%= f.label :debit_amount %><br>
-    <%= f.number_field :debit_amount %>
-  </div>
+
+  <% if ['流動資産','支出'].include? @subject.subject_type %>
+    <div class="field">
+      <%= f.label :debit_subject_id %><br>
+      <%= f.collection_select :debit_subject_id, Subject.where("level == 1 " ),:id,:name, include_blank: false %>
+    </div>
+    <div class="field">
+      <%= f.label :debit_amount %><br>
+      <%= f.number_field :debit_amount %>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.label :credit_subject_id %><br>
+      <%= f.collection_select :credit_subject_id, Subject.where("level == 1 " ),:id,:name, include_blank: false %>
+    </div>
+    <div class="field">
+      <%= f.label :credit_amount %><br>
+      <%= f.number_field :credit_amount %>
+    </div>
+  <% end %>
+
+  
+  <%= f.hidden_field :subject_id, :value => @subject.id %>
   <div class="actions">
     <%= f.submit %>
   </div>

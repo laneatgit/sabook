@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @entry_item %> |
-<%= link_to 'Back', entry_items_path %>
+
+<%= link_to 'Back', ledger_path(:subject_id => @subject.id)  %>
