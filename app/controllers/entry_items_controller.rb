@@ -4,7 +4,10 @@ class EntryItemsController < ApplicationController
   # GET /entry_items
   # GET /entry_items.json
   def index
-    @entry_items = EntryItem.all
+    subject_id = params[:subject_id]
+    @subject = Subject.find(subject_id)
+    @entry_items = EntryItem.where(credit_subject:subject_id)
+    @entry_items = EntryItem.where(["credit_subject_id = :id or debit_subject_id = :id", { id: subject_id }]).order(:entry_date)
   end
 
   # GET /entry_items/1
@@ -14,9 +17,9 @@ class EntryItemsController < ApplicationController
 
   # GET /entry_items/new
   def new
-    @entry_item = EntryItem.new
 
-     subject_id = params[:subject_id]
+    @entry_item = EntryItem.new
+    subject_id = params[:subject_id]
     @subject = Subject.find(subject_id)
 
   end
@@ -39,12 +42,10 @@ class EntryItemsController < ApplicationController
   # POST /entry_items
   # POST /entry_items.json
   def create
-    subject_id = entry_item_params[:subject_id]
     @entry_item = EntryItem.new(entry_item_params)
-
     respond_to do |format|
       if @entry_item.save
-        format.html { redirect_to ledger_path(:subject_id => subject_id), notice: 'Entry item was successfully created.' }
+        format.html { render :show, notice: 'Entry item was successfully created.' }
         #format.json { render :show, status: :created, location: @entry_item }
       else
         format.html { render :new, ubject_id: params[:subject_id]}
@@ -56,12 +57,12 @@ class EntryItemsController < ApplicationController
   # PATCH/PUT /entry_items/1
   # PATCH/PUT /entry_items/1.json
   def update
-    subject_id = entry_item_params[:subject_id]
     respond_to do |format|
       if @entry_item.update(entry_item_params)
-        format.html { redirect_to ledger_path(:subject_id => subject_id) , notice: 'Entry item was successfully updated.' }
+        format.html { render :show , notice: 'Entry item was successfully updated.' }
         #format.json { render :show, status: :ok, location: @entry_item }
       else
+       
         format.html { render :edit, subject_id: params[:subject_id]}
         #format.json { render json: @entry_item.errors, status: :unprocessable_entity }
       end
@@ -86,7 +87,7 @@ class EntryItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_item_params
-      params.require(:entry_item).permit(:entry_date, :explanation, :credit_subject_id, :credit_amount, :debit_subject_id, :debit_amount, :subject_id)
+      params.require(:entry_item).permit(:entry_date, :explanation, :credit_subject_id,  :debit_subject_id, :amount)
     end
 
 

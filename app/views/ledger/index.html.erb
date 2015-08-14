@@ -29,12 +29,12 @@
         <td><%= entry_item.explanation %></td>
         <%if entry_item.credit_subject.id == @subject.id %>
             <td><%= entry_item.debit_subject.name %></td>
-            <td><%= entry_item.credit_amount %></td>
+            <td><%= entry_item.amount %></td>
             <td>0</td>
         <%else%>
             <td><%= entry_item.credit_subject.name %></td>
             <td>0</td>
-            <td><%= entry_item.debit_amount %></td>
+            <td><%= entry_item.amount %></td>
         <%end%>
         <td><%= link_to 'Edit', edit_entry_item_path(entry_item,:subject_id=>@subject) %></td>
         <td><%= link_to 'Destroy', entry_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>

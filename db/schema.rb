@@ -17,9 +17,8 @@ ActiveRecord::Schema.define(version: 20150811074009) do
     t.date     "entry_date"
     t.text     "explanation"
     t.integer  "credit_subject_id"
-    t.integer  "credit_amount"
     t.integer  "debit_subject_id"
-    t.integer  "debit_amount"
+    t.integer  "amount"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end

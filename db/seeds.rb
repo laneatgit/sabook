@@ -190,7 +190,7 @@ Subject.create!(name:'不動産所得',parent_subject:c, level:2, subject_type: 
 
 EntryItem.delete_all
 
-EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping',credit_subject:subject_daily_necessities, credit_amount:1000, debit_subject:subject_cash_bag, debit_amount:1000)
+EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping',credit_subject:subject_daily_necessities,  debit_subject:subject_cash_bag, amount:1000)
 # ledgers/index?subject_id=1　　(お財布)
 #       entry_date    explanation     contra_subject  credit_amount   debit_amount
 #       2015/8/1,     'go shopping',  日常品,           0                1,000
@@ -198,7 +198,7 @@ EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanatio
 #       entry_date    explanation     contra_subject  credit_amount   debit_amount
 #       2015/8/1,     'go shopping',  お財布,           1,000             0
 
-EntryItem.create!(entry_date:DateTime.strptime('20150802', '%Y%m%d'), explanation:'bonus',credit_subject:subject_mitsui, credit_amount:100000, debit_subject:subject_salary, debit_amount:100000)    
+EntryItem.create!(entry_date:DateTime.strptime('20150802', '%Y%m%d'), explanation:'bonus',credit_subject:subject_mitsui, debit_subject:subject_salary, amount:100000)    
 # ledgers/index?subject_id=3　　(三井住友銀行)
 #       entry_date    explanation     contra_subject  credit_amount   debit_amount
 #       2015/8/2,     'bonus',        給料,           　100,000           0

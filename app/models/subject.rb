@@ -8,8 +8,8 @@ class Subject < ActiveRecord::Base
   validates :name, presence:true
   
   def ledger_amount
-    credit_sum = self.credit_entries.sum(:credit_amount)
-    debit_sum =  self.debit_entries.sum(:debit_amount)
+    credit_sum = self.credit_entries.sum(:amount)
+    debit_sum =  self.debit_entries.sum(:amount)
     
     if self.subject_type == '流動資産' || self.subject_type == '支出'
         return credit_sum -debit_sum

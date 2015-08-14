@@ -1,17 +1,24 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Entry Items</h1>
+<h1><%= @subject.name %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Entry date</th>
-      <th>Explanation</th>
-      <th>Credit subject</th>
-      <th>Credit amount</th>
-      <th>Debit subject</th>
-      <th>Debit amount</th>
-      <th colspan="3"></th>
+      <th>日付</th>
+      <th>用途</th>
+      <th>相手科目</th>
+      <%if @subject.subject_type == "流動資産"%>
+          <th>入金</th>
+          <th>出金</th>
+      <%elsif @subject.subject_type == "支出"%>
+          <th>費用</th>
+          <th>割引</th>
+      <%elsif @subject.subject_type == "収入"%>
+          <th>割引</th>
+          <th>収入</th>
+      <%else%>
+          <% raise "wrong subject type"%>
+      <%end%>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -20,13 +27,19 @@
       <tr>
         <td><%= entry_item.entry_date %></td>
         <td><%= entry_item.explanation %></td>
-        <td><%= entry_item.credit_subject %></td>
-        <td><%= entry_item.credit_amount %></td>
-        <td><%= entry_item.debit_subject %></td>
-        <td><%= entry_item.debit_amount %></td>
-        <td><%= link_to 'Show', entry_item %></td>
-        <td><%= link_to 'Edit', edit_entry_item_path(entry_item) %></td>
-        <td><%= link_to 'Destroy', entry_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%if entry_item.credit_subject.id == @subject.id %>
+            <td><%= entry_item.debit_subject.name %></td>
+            <td><%= entry_item.amount %></td>
+            <td>0</td>
+        <%else%>
+            <td><%= entry_item.credit_subject.name %></td>
+            <td>0</td>
+            <td><%= entry_item.amount %></td>
+        <%end%>
+        
+        <td><%= link_to "Edit", edit_subject_entry_item_path(entry_item,:subject_id=>@subject) %></td>
+        
+        
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +47,8 @@
 
 <br>
 
-<%= link_to 'New Entry item', new_entry_item_path %>
+
+
+
+
+

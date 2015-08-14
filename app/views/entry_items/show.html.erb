@@ -15,10 +15,7 @@
   <%= @entry_item.credit_subject %>
 </p>
 
-<p>
-  <strong>Credit amount:</strong>
-  <%= @entry_item.credit_amount %>
-</p>
+
 
 <p>
   <strong>Debit subject:</strong>
@@ -26,9 +23,8 @@
 </p>
 
 <p>
-  <strong>Debit amount:</strong>
-  <%= @entry_item.debit_amount %>
+  <strong>Amount:</strong>
+  <%= @entry_item.amount %>
 </p>
 
-<%= link_to 'Edit', edit_entry_item_path(@entry_item) %> |
-<%= link_to 'Back', entry_items_path %>
+
