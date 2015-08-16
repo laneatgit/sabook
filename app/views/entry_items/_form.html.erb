@@ -28,7 +28,10 @@
     </div>
 
     <div class="field">
-      <%= u.label :amount, '入金' %><br>
+
+
+      <%= u.label :amount, trading_title_by_direction(@subject.subject_type, @entry_item_line.direction) %><br>
+
       <%= u.number_field :amount %>
    </div>  
 
