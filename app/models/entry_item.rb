@@ -1,8 +1,10 @@
 class EntryItem < ActiveRecord::Base
-  belongs_to :credit_subject, :class_name => 'Subject'
-  belongs_to :debit_subject, :class_name => 'Subject'
+  has_many :entry_item_lines, dependent: :destroy
+  accepts_nested_attributes_for :entry_item_lines
+
   #validate :credit_and_debit_amount_must_be_equal
-  validates :entry_date, :credit_subject, :debit_subject,:amount, presence:true
+  validates :entry_date, presence:true
+
   
   
 

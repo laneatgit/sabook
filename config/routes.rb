@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   
   
+  resources :entry_item_lines
   get 'ledger/:subject_id', to: 'ledger#index', as: 'ledger'
   
   resources :subjects
   
+
   resources :subjects do
     resources :entry_items
   end

@@ -2,14 +2,12 @@ class Subject < ActiveRecord::Base
   enum subject_type: {流動資産:0, 支出:1, 収入:2}  
 
   has_many :subjects, class_name: "Subject",foreign_key: "parent_subject_id"
-  has_many :credit_entries, class_name: "EntryItem",foreign_key: "credit_subject_id"
-  has_many :debit_entries, class_name: "EntryItem",foreign_key: "debit_subject_id"
   belongs_to :parent_subject, :class_name => 'Subject'                        
   validates :name, presence:true
   
   def ledger_amount
-    credit_sum = self.credit_entries.sum(:amount)
-    debit_sum =  self.debit_entries.sum(:amount)
+    credit_sum = EntryItemLine.where(["direction = 0 and subject_id = :id", { id: self.id }]).sum(:amount)
+    debit_sum =  EntryItemLine.where(["direction = 1 and subject_id = :id", { id: self.id }]).sum(:amount)
     
     if self.subject_type == '流動資産' || self.subject_type == '支出'
         return credit_sum -debit_sum

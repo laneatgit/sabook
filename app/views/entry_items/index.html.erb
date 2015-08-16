@@ -1,5 +1,5 @@
 <h1><%= @subject.name %></h1>
-
+<%= link_to "New", new_subject_entry_item_path(@subject) %>
 <table>
   <thead>
     <tr>
@@ -23,23 +23,33 @@
   </thead>
 
   <tbody>
-    <% @entry_items.each do |entry_item| %>
+    <% @entry_item_lines.each do |line| %>
       <tr>
-        <td><%= entry_item.entry_date %></td>
-        <td><%= entry_item.explanation %></td>
-        <%if entry_item.credit_subject.id == @subject.id %>
-            <td><%= entry_item.debit_subject.name %></td>
-            <td><%= entry_item.amount %></td>
-            <td>0</td>
+        <td><%= line.entry_item.entry_date %></td>
+        <td><%= line.entry_item.explanation %></td>
+        <td><%= line.subject.name %></td>
+
+        <%if @subject.subject_type == "流動資産" or @subject.subject_type == "支出"%>
+          <%if line.direction == '借' %>
+              <td>0</td>
+              <td><%= line.amount %></td>           
+          <%else%>
+              <td><%= line.amount %></td>
+              <td>0</td>
+          <%end%>
+        <%elsif @subject.subject_type == "収入"%>
+          <%if line.direction == '借' %>
+              <td><%= line.amount %></td>
+              <td>0</td>
+          <%else%>
+             <td>0</td>
+              <td><%= line.amount %></td>
+          <%end%>
         <%else%>
-            <td><%= entry_item.credit_subject.name %></td>
-            <td>0</td>
-            <td><%= entry_item.amount %></td>
-        <%end%>
-        
-        <td><%= link_to "Edit", edit_subject_entry_item_path(entry_item,:subject_id=>@subject) %></td>
-        
-        
+            <% raise "wrong subject type"%>
+        <%end%> 
+
+        <td><%= link_to "Edit", edit_subject_entry_item_path(line,:subject_id=>@subject) %></td>
       </tr>
     <% end %>
   </tbody>

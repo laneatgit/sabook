@@ -20,25 +20,20 @@
     <%= f.text_area :explanation %>
   </div>
   
-   <% if @subject.id == @entry_item.credit_subject_id %>
+  <%= fields_for :entry_item_line do |u| %>
+   
     <div class="field">
-      <%= f.label :debit_subject_id %><br>
-      <%= f.collection_select :debit_subject_id, Subject.all,:id,:name, include_blank: false %>
+      <%= u.label :subject_id, '相手科目' %><br>
+      <%= u.collection_select :subject_id, Subject.all,:id,:name, include_blank: false %>
     </div>
 
-   <%else%>
-     <div class="field">
-      <%= f.label :credit_subject_id %><br>
-      <%= f.collection_select :credit_subject_id, Subject.all,:id,:name, include_blank: false %>
-    </div>
-
-
-   <%end%>
-  
-   <div class="field">
-      <%= f.label :amount %><br>
-      <%= f.number_field :amount %>
+    <div class="field">
+      <%= u.label :amount, '入金' %><br>
+      <%= u.number_field :amount %>
    </div>  
+
+  <% end %>
+    
 
   <div class="actions">
     <%= f.submit %>

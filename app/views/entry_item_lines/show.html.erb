@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Entry item:</strong>
+  <%= @entry_item_line.entry_item %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @entry_item_line.subject %>
+</p>
+
+<p>
+  <strong>Direction:</strong>
+  <%= @entry_item_line.direction %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @entry_item_line.amount %>
+</p>
+
+<%= link_to 'Edit', edit_entry_item_line_path(@entry_item_line) %> |
+<%= link_to 'Back', entry_item_lines_path %>

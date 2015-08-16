@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Entry Item Lines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Entry item</th>
+      <th>Subject</th>
+      <th>Direction</th>
+      <th>Amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entry_item_lines.each do |entry_item_line| %>
+      <tr>
+        <td><%= entry_item_line.entry_item %></td>
+        <td><%= entry_item_line.subject %></td>
+        <td><%= entry_item_line.direction %></td>
+        <td><%= entry_item_line.amount %></td>
+        <td><%= link_to 'Show', entry_item_line %></td>
+        <td><%= link_to 'Edit', edit_entry_item_line_path(entry_item_line) %></td>
+        <td><%= link_to 'Destroy', entry_item_line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Entry item line', new_entry_item_line_path %>
