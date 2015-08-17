@@ -66,10 +66,6 @@ class EntryItemsController < ApplicationController
 
   # GET /entry_items/1/edit
   def edit
-    
-
-    
-
   end
 
   # POST /entry_items
@@ -101,6 +97,9 @@ class EntryItemsController < ApplicationController
   # PATCH/PUT /entry_items/1
   # PATCH/PUT /entry_items/1.json
   def update
+    
+    
+    
     respond_to do |format|
       if @entry_item.update(entry_item_params)
         format.html { redirect_to subject_entry_items_url, notice: 'Entry item was successfully updated.' }
@@ -133,7 +132,10 @@ class EntryItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_item_params
-      #params.require(:entry_item).permit(:entry_date, :explanation )
+      
+      a = params.require(:entry_item).permit(:entry_date, :explanation)
+      a = a.require(:entry_item_line).permit(:subject_id)
+      raise a.inspect
     end
 
     
