@@ -97,17 +97,15 @@ class EntryItemsController < ApplicationController
   # PATCH/PUT /entry_items/1
   # PATCH/PUT /entry_items/1.json
   def update
-    
-    
-    
     respond_to do |format|
-      if @entry_item.update(entry_item_params)
-        format.html { redirect_to subject_entry_items_url, notice: 'Entry item was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @entry_item }
-      else
-       
-        format.html { render :edit, subject_id: params[:subject_id]}
-        #format.json { render json: @entry_item.errors, status: :unprocessable_entity }
+      ActiveRecord::Base.transaction do
+        if @entry_item.update(entry_item_params) and @entry_item_line.update(entry_item_line_params)
+          format.html { redirect_to subject_entry_items_url, notice: 'Entry item was successfully updated.' }
+          #format.json { render :show, status: :ok, location: @entry_item }
+        else
+          format.html { render :edit, subject_id: params[:subject_id]}
+          #format.json { render json: @entry_item.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -132,10 +130,11 @@ class EntryItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_item_params
-      
-      a = params.require(:entry_item).permit(:entry_date, :explanation)
-      a = a.require(:entry_item_line).permit(:subject_id)
-      raise a.inspect
+      params.require(:entry_item).permit(:entry_date, :explanation)
+    end
+
+    def entry_item_line_params
+      params.require(:entry_item_line).permit(:subject_id, :amount)
     end
 
     
