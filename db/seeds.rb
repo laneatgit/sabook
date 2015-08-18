@@ -5,6 +5,11 @@ Subject.delete_all
 ########################
 # 流動資産
 ########################
+start_point = Subject.create!(name: '開始残高',  level:1, subject_type: '開始残高')
+
+########################
+# 流動資産
+########################
 c = Subject.create!(name: '銀行口座',  level:1, subject_type: '流動資産')
 subject_mitsui = Subject.create!(name:'三井住友銀行',parent_subject:c, level:2, subject_type: '流動資産')
 subject_cash_bag = Subject.create!(name: 'お財布',  level:1, subject_type: '流動資産')
@@ -191,6 +196,10 @@ Subject.create!(name:'不動産所得',parent_subject:c, level:2, subject_type: 
 
 EntryItem.delete_all
 EntryItemLine.delete_all
+
+e = EntryItem.create!(entry_date:DateTime.strptime('20150701', '%Y%m%d'), explanation:'go shopping')
+EntryItemLine.create!(entry_item:e, subject:subject_cash_bag, direction:'借', amount:32005)
+EntryItemLine.create!(entry_item:e, subject:start_point, direction:'貸', amount:32005)
 
 e = EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping')
 EntryItemLine.create!(entry_item:e, subject:subject_daily_necessities, direction:'借', amount:1000)

@@ -42,12 +42,12 @@ class EntryItemLinesController < ApplicationController
         
           oppsite_subject = Subject.find(entry_item_line_params[:subject_id])
           amount = str2int(entry_item_line_params[:amount])
-
+          
           EntryItem.transaction do
           
             c = EntryItem.new(entry_item_params)
             lines = []
-            if oppsite_subject.subject_type == '流動資産' or oppsite_subject.subject_type == '支出'
+            if oppsite_subject.subject_type == '流動資産' or oppsite_subject.subject_type == '収入'
               lines.push EntryItemLine.new(entry_item:c, subject:@subject, direction:'借', amount:amount)
               lines.push EntryItemLine.new(entry_item:c, subject:oppsite_subject, direction:'貸', amount:amount)
             else

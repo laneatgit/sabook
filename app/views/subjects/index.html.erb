@@ -22,7 +22,7 @@
         <!--<td><%= link_to subject.name, subject %></td>-->
         <td><%= link_to subject.name, subject_entry_item_lines_path(:subject_id => subject.id)  %></td>
         <td><%= subject.description %></td>
-        <td><%= subject.ledger_amount %></td>
+        <td><%= number_to_currency(subject.ledger_amount, :locale => 'jp') %></td>
         
       </tr>
     <% end %>

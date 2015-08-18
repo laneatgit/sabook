@@ -34,18 +34,18 @@
         <%if @subject.subject_type == "流動資産" or @subject.subject_type == "支出"%>
           <%if line.direction == '借' %>
               <td>0</td>
-              <td><%= line.amount %></td>           
+              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>           
           <%else%>
-              <td><%= line.amount %></td>
+              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>
               <td>0</td>
           <%end%>
-        <%elsif @subject.subject_type == "収入"%>
+        <%elsif @subject.subject_type == "収入" or @subject.subject_type == "開始残高"%>
           <%if line.direction == '借' %>
-              <td><%= line.amount %></td>
+              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>
               <td>0</td>
           <%else%>
              <td>0</td>
-              <td><%= line.amount %></td>
+              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>
           <%end%>
         <%else%>
             <% raise "wrong subject type"%>
