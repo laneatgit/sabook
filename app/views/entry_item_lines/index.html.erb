@@ -1,28 +1,57 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Entry Item Lines</h1>
-
+<h1><%= @subject.name %></h1>
+<%= link_to "New", new_subject_entry_item_line_path(@subject) %>
 <table>
   <thead>
     <tr>
-      <th>Entry item</th>
-      <th>Subject</th>
-      <th>Direction</th>
-      <th>Amount</th>
-      <th colspan="3"></th>
+      <th>日付</th>
+      <th>用途</th>
+      <th>相手科目</th>
+      <%if @subject.subject_type == "流動資産"%>
+          <th>入金</th>
+          <th>出金</th>
+      <%elsif @subject.subject_type == "支出"%>
+          <th>費用</th>
+          <th>割引</th>
+      <%elsif @subject.subject_type == "収入"%>
+          <th>割引</th>
+          <th>収入</th>
+      <%else%>
+          <% raise "wrong subject type"%>
+      <%end%>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @entry_item_lines.each do |entry_item_line| %>
+    <% @entry_item_lines.each do |line| %>
       <tr>
-        <td><%= entry_item_line.entry_item %></td>
-        <td><%= entry_item_line.subject %></td>
-        <td><%= entry_item_line.direction %></td>
-        <td><%= entry_item_line.amount %></td>
-        <td><%= link_to 'Show', entry_item_line %></td>
-        <td><%= link_to 'Edit', edit_entry_item_line_path(entry_item_line) %></td>
-        <td><%= link_to 'Destroy', entry_item_line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= line.entry_item.entry_date %></td>
+        <td><%= line.entry_item.explanation %></td>
+        <td><%= line.subject.name %></td>
+
+        <%if @subject.subject_type == "流動資産" or @subject.subject_type == "支出"%>
+          <%if line.direction == '借' %>
+              <td>0</td>
+              <td><%= line.amount %></td>           
+          <%else%>
+              <td><%= line.amount %></td>
+              <td>0</td>
+          <%end%>
+        <%elsif @subject.subject_type == "収入"%>
+          <%if line.direction == '借' %>
+              <td><%= line.amount %></td>
+              <td>0</td>
+          <%else%>
+             <td>0</td>
+              <td><%= line.amount %></td>
+          <%end%>
+        <%else%>
+            <% raise "wrong subject type"%>
+        <%end%> 
+
+        <td><%= link_to "Edit", edit_subject_entry_item_line_path(line,:subject_id=>@subject) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +59,10 @@
 
 <br>
 
-<%= link_to 'New Entry item line', new_entry_item_line_path %>
+<%= link_to '総勘定一覧', subjects_path() %>
+
+
+
+
+
+

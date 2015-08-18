@@ -20,7 +20,7 @@
         <td><%= subject.subject_type %></td>
         <td><%= display_name(subject.parent_subject) %></td>
         <!--<td><%= link_to subject.name, subject %></td>-->
-        <td><%= link_to subject.name, subject_entry_items_path(:subject_id => subject.id)  %></td>
+        <td><%= link_to subject.name, subject_entry_item_lines_path(:subject_id => subject.id)  %></td>
         <td><%= subject.description %></td>
         <td><%= subject.ledger_amount %></td>
         

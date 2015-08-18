@@ -40,10 +40,10 @@ class EntryItemsController < ApplicationController
         credit_line = item.entry_item_lines.find_by direction:0
         debit_line = item.entry_item_lines.find_by direction:1
 
-        if credit_line.subject == @subject
+        if credit_line.subject == @subject and not @entry_item_lines.include? debit_line
                 @entry_item_lines.push debit_line
         end
-        if debit_line.subject == @subject
+        if debit_line.subject == @subject and not @entry_item_lines.include? credit_line
                 @entry_item_lines.push credit_line
         end
     end
@@ -97,14 +97,26 @@ class EntryItemsController < ApplicationController
   # PATCH/PUT /entry_items/1
   # PATCH/PUT /entry_items/1.json
   def update
+  
     respond_to do |format|
       ActiveRecord::Base.transaction do
-        if @entry_item.update(entry_item_params) and @entry_item_line.update(entry_item_line_params)
+        raise @entry_item_line.inspect
+        if @entry_item.update(entry_item_params) #and @entry_item_line.update(entry_item_line_params)
+        
+          amount = entry_item_line_params[:amount]
+          @entry_item.entry_item_lines.each do |line|
+            #line.amount = amount
+            #line.save
+          end
+      
           format.html { redirect_to subject_entry_items_url, notice: 'Entry item was successfully updated.' }
           #format.json { render :show, status: :ok, location: @entry_item }
+          
         else
+        
           format.html { render :edit, subject_id: params[:subject_id]}
           #format.json { render json: @entry_item.errors, status: :unprocessable_entity }
+          
         end
       end
     end
@@ -123,9 +135,12 @@ class EntryItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry_item
+    
       @entry_item_line = EntryItemLine.find(params[:id])
       @entry_item = @entry_item_line.entry_item
       @subject = Subject.find(params[:subject_id])
+      
+      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
