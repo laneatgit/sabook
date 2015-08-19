@@ -17,6 +17,9 @@
       <%elsif @subject.subject_type == "収入"%>
           <th>割引</th>
           <th>収入</th>
+      <%elsif @subject.subject_type == "開始残高"%>
+          <th>割引</th>
+          <th>収入</th>
       <%else%>
           <% raise "wrong subject type"%>
       <%end%>

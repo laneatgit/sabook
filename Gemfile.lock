@@ -37,11 +37,20 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
+    autoprefixer-rails (5.2.1.2)
+      execjs
+      json
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.3.5.1)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.3.0)
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
+    closure_tree (5.2.0)
+      activerecord (>= 3.2.0)
+      with_advisory_lock (>= 3.0.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -141,13 +150,18 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    with_advisory_lock (3.0.0)
+      activerecord (>= 3.2)
+      thread_safe
 
 PLATFORMS
   ruby
   x86-mingw32
 
 DEPENDENCIES
+  bootstrap-sass
   byebug
+  closure_tree
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
   jquery-rails

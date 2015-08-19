@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815134512) do
+ActiveRecord::Schema.define(version: 20150819054440) do
 
   create_table "entry_item_lines", force: :cascade do |t|
     t.integer  "entry_item_id"
@@ -32,16 +32,23 @@ ActiveRecord::Schema.define(version: 20150815134512) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "subject_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "subject_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "subject_anc_desc_idx", unique: true
+  add_index "subject_hierarchies", ["descendant_id"], name: "subject_desc_idx"
+
   create_table "subjects", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "parent_subject_id"
-    t.integer  "level"
     t.integer  "subject_type"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "parent_id"
+    t.boolean  "frozen",       default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
-
-  add_index "subjects", ["parent_subject_id"], name: "index_subjects_on_parent_subject_id"
 
 end
