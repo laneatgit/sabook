@@ -1,193 +1,70 @@
 # encoding: utf-8
 
+
+def create_subjects(p, children)
+  children.each do |i|
+    p.children.create!(name:i, subject_type:p.subject_type)
+  end
+end
+
 Subject.delete_all
 
 ########################
-# 流動資産
+# Root Nodes
 ########################
-start_point = Subject.create!(name: '開始残高',  level:1, subject_type: '開始残高')
 
-########################
-# 流動資産
-########################
-c = Subject.create!(name: '銀行口座',  level:1, subject_type: '流動資産')
-subject_mitsui = Subject.create!(name:'三井住友銀行',parent_subject:c, level:2, subject_type: '流動資産')
-subject_cash_bag = Subject.create!(name: 'お財布',  level:1, subject_type: '流動資産')
+###??? IMBLANCE
 
 ########################
-# 支出
+# 資産
 ########################
-# 教養・教育
-c = Subject.create!(name: '教養・教育', level:1, subject_type: '支出')
-Subject.create!(name:'書籍',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'新聞・雑誌',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'習いごと',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'塾',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他教養・教育',parent_subject:c, level:2, subject_type: '支出')
-
-#住宅
-#家賃・地代   ローン返済   管理費・積立金 地震・火災保険 その他住宅 
-c = Subject.create!(name: '住宅',  level:1, subject_type: '支出')
-Subject.create!(name:'家賃・地代',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'ローン返済',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'管理費・積立',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'地震・火災保険',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他住宅',parent_subject:c, level:2, subject_type: '支出')
-
-
-#水道・光熱費  
-#電気代 ガス・灯油代  水道代 その他水道・光熱費
-c = Subject.create!(name: '水道・光熱費', level:1, subject_type: '支出')  
-Subject.create!(name:'電気代',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'ガス・灯油代',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'水道代',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他水道・光熱費',parent_subject:c, level:2, subject_type: '支出')
-
-
-#通信費 
-#携帯電話    インターネット 固定電話    放送視聴料   情報サービス  その他通信費  宅配便・運送 
-c = Subject.create!(name: '通信費',  level:1, subject_type: '支出')  
-Subject.create!(name:'携帯電話',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'インターネット',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'固定電話',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'放送視聴料',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'情報サービス',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他通信費',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'宅配便・運送',parent_subject:c, level:2, subject_type: '支出')
-
-
-#自動車 
-#自動車ローン  ガソリン    駐車場 車両  車検・整備   道路料金    その他自動車  自動車保険
-c = Subject.create!(name: '自動車',  level:1, subject_type: '支出') 
-Subject.create!(name:'自動車ローン',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'ガソリン',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'駐車場',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'車両',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'車検・整備',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'道路料金',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他自動車',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'自動車保険',parent_subject:c, level:2, subject_type: '支出')
-
-#保険  
-#生命保険    医療保険    その他保険
-c = Subject.create!(name: '保険',  level:1, subject_type: '支出') 
-Subject.create!(name:'生命保険',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'医療保険',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他保険',parent_subject:c, level:2, subject_type: '支出') 
-
-
-#税・社会保障  
-#所得税・住民税 年金保険料   健康保険    その他税・社会保障 
-c = Subject.create!(name: '税・社会保障', level:1, subject_type: '支出') 
-Subject.create!(name:'所得税・住民税',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'年金保険料',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'健康保険',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'その他税・社会保障',parent_subject:c, level:2, subject_type: '支出') 
-
-
-#日用品 
-#日用品 ドラッグストア おこづかい   ペット 子育て その他日用品  タバコ 
-c = Subject.create!(name: '日用品',  level:1, subject_type: '支出') 
-subject_daily_necessities = Subject.create!(name:'日用品',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'ドラッグストア',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'おこづかい',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'ペット',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'子育て',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他日用品',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'タバコ',parent_subject:c, level:2, subject_type: '支出') 
-
-#食費  
-#食料品 外食  カフェ その他食費   朝ご飯 昼ご飯 夜ご飯 
-c = Subject.create!(name: '食費',  level:1, subject_type: '支出') 
-Subject.create!(name:'食料品',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'外食',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'カフェ',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'その他食費',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'朝ご飯',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'昼ご飯',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'夜ご飯',parent_subject:c, level:2, subject_type: '支出') 
-
-#趣味・娯楽   
-#アウトドア   スポーツ    映画・音楽・ゲーム   本   旅行  秘密の趣味   その他趣味・娯楽 
-c = Subject.create!(name: '趣味・娯楽',  level:1, subject_type: '支出') 
-Subject.create!(name:'アウトドア',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'スポーツ',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'映画・音楽・ゲーム',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'本',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'旅行',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'秘密の趣味',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'その他趣味・娯楽',parent_subject:c, level:2, subject_type: '支出') 
-
-#衣服・美容   
-#衣服  クリーニング  美容院・理髪  化粧品 アクセサリー  その他衣服・美容    
-c = Subject.create!(name: '衣服・美容',  level:1, subject_type: '支出') 
-Subject.create!(name:'衣服',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'クリーニング',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'美容院・理髪',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'化粧品',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'アクセサリー',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他衣服・美容',parent_subject:c, level:2, subject_type: '支出') 
-
-
-#健康・医療   
-#フィットネス  ボディケア   医療費 薬   その他健康・医療  
-c = Subject.create!(name: '健康・医療',  level:1, subject_type: '支出') 
-Subject.create!(name:'フィットネス',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'ボディケア',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'医療費',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'薬',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'その他健康・医療',parent_subject:c, level:2, subject_type: '支出')
-
-
-#交通費 
-#その他交通費  電車  バス  飛行機 タクシー    
-c = Subject.create!(name: '交通費',  level:1, subject_type: '支出') 
-Subject.create!(name:'その他交通費',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'電車',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'バス',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'飛行機',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'タクシー',parent_subject:c, level:2, subject_type: '支出')
-
-#交際費 
-#飲み会 冠婚葬祭    プレゼント代  その他交際費 
-c = Subject.create!(name: '交際費',  level:1, subject_type: '支出') 
-Subject.create!(name:'飲み会',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'冠婚葬祭',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'プレゼント代',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'その他交際費',parent_subject:c, level:2, subject_type: '支出') 
-
-
-#特別な支出   
-#住宅・リフォーム    家具・家電   その他特別な支出
-c = Subject.create!(name: '特別な支出',  level:1, subject_type: '支出') 
-Subject.create!(name:'住宅・リフォーム',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'家具・家電',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'その他特別な支出',parent_subject:c, level:2, subject_type: '支出') 
-
-
-
-#その他 
-#雑費  仕送り 事業経費    事業原価    事業投資    寄付金 
-c = Subject.create!(name: 'その他',  level:1, subject_type: '支出') 
-Subject.create!(name:'雑費',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'仕送り',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'事業経費',parent_subject:c, level:2, subject_type: '支出') 
-Subject.create!(name:'事業原価',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'事業投資',parent_subject:c, level:2, subject_type: '支出')
-Subject.create!(name:'寄付金',parent_subject:c, level:2, subject_type: '支出') 
+root = Subject.create!(name: '資産',  subject_type: 'asset', fixed: true)
+current_asset = root.children.create!(name: '流動資産', subject_type: root.subject_type, fixed: true)
+current_asset.children.create!(name: '現金',description: '財布の中の現金', subject_type: root.subject_type)
+current_asset.children.create!(name: '当座預金',description: '当座預金', subject_type: root.subject_type)
+current_asset.children.create!(name: '普通預金',description: '普通預金', subject_type: root.subject_type)
+########################
+# 純資産
+########################
+root = Subject.create!(name: '純資産',  subject_type: 'equity', fixed: true)
+root.children.create!(name: '開始残高',subject_type: root.subject_type)
+########################
+# 収益
+########################
+root = Subject.create!(name: '収益',  subject_type: 'income', fixed: true)
+root.children.create!(name: 'その他の収入',subject_type: root.subject_type)
+root.children.create!(name: 'ボーナス',subject_type: root.subject_type)
+root.children.create!(name: '給与',subject_type: root.subject_type)
+root.children.create!(name: '贈与収入',subject_type: root.subject_type)
 
 ########################
-# 支出
+# 負債
 ########################
-#収入  給与  一時所得    事業・副業   年金  その他入金   配当所得    不動産所得  
-c = Subject.create!(name: '収入',  level:1, subject_type: '収入') 
-subject_salary = Subject.create!(name:'給与',parent_subject:c, level:2, subject_type: '収入')
-Subject.create!(name:'一時所得',parent_subject:c, level:2, subject_type: '収入')
-Subject.create!(name:'事業・副業',parent_subject:c, level:2, subject_type: '収入') 
-Subject.create!(name:'年金',parent_subject:c, level:2, subject_type: '収入')
-Subject.create!(name:'その他入金',parent_subject:c, level:2, subject_type: '収入')
-Subject.create!(name:'配当所得',parent_subject:c, level:2, subject_type: '収入') 
-Subject.create!(name:'不動産所得',parent_subject:c, level:2, subject_type: '収入') 
+root = Subject.create!(name: '負債',  subject_type: 'liability', fixed: true)
+root.children.create!(name: 'クレジットカード',subject_type: root.subject_type)
+
+########################
+# 費用
+########################
+root = Subject.create!(name: '費用',  subject_type: 'expense', fixed: true)
+create_subjects(root,['オンラインサービス','クリニング','ケーブルテレビ','コンピューター','その他','衣料品','医療費','義援金','教育','銀行手数料',
+'交通機関','購読','趣味','書籍','消耗品','食費','贈答','調整','電話','日用品'])
+
+item = root.children.create!(name: '娯楽',subject_type: root.subject_type)
+create_subjects(item,['リクリエーション','音楽/映画','旅行'])
+
+item = root.children.create!(name: '公共料金',subject_type: root.subject_type)
+create_subjects(item,['ガス','ゴミ収集','水道','電気'])
+
+
+item = root.children.create!(name: '自動車',subject_type: root.subject_type)
+create_subjects(item,['ガソリン','修理維持','駐車場','通行料'])
+
+item = root.children.create!(name: '税金',subject_type: root.subject_type)
+create_subjects(item,['その他の税','健康保険','公的年金','国税','地方税'])
+
+item = root.children.create!(name: '保険料',subject_type: root.subject_type)
+create_subjects(item,['医療保険','自動車保険','生命保険'])
 
 ########################
 # 勘定元帳
@@ -198,12 +75,12 @@ EntryItem.delete_all
 EntryItemLine.delete_all
 
 e = EntryItem.create!(entry_date:DateTime.strptime('20150701', '%Y%m%d'), explanation:'go shopping')
-EntryItemLine.create!(entry_item:e, subject:subject_cash_bag, direction:'借', amount:32005)
-EntryItemLine.create!(entry_item:e, subject:start_point, direction:'貸', amount:32005)
+EntryItemLine.create!(entry_item:e, subject:Subject.find_by(name:'書籍'), direction:'借', amount:32005)
+EntryItemLine.create!(entry_item:e, subject:Subject.find_by(name:'現金'), direction:'貸', amount:32005)
 
-e = EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping')
-EntryItemLine.create!(entry_item:e, subject:subject_daily_necessities, direction:'借', amount:1000)
-EntryItemLine.create!(entry_item:e, subject:subject_cash_bag, direction:'貸', amount:1000)
+#e = EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping')
+#EntryItemLine.create!(entry_item:e, subject:subject_daily_necessities, direction:'借', amount:1000)
+#EntryItemLine.create!(entry_item:e, subject:subject_cash_bag, direction:'貸', amount:1000)
 # ledgers/index?subject_id=1　　(お財布)
 #       entry_date    explanation     contra_subject  credit_amount   debit_amount
 #       2015/8/1,     'go shopping',  日常品,           0                1,000
@@ -211,9 +88,9 @@ EntryItemLine.create!(entry_item:e, subject:subject_cash_bag, direction:'貸', a
 #       entry_date    explanation     contra_subject  credit_amount   debit_amount
 #       2015/8/1,     'go shopping',  お財布,           1,000             0
 
-e = EntryItem.create!(entry_date:DateTime.strptime('20150802', '%Y%m%d'), explanation:'bonus')    
-EntryItemLine.create!(entry_item:e, subject:subject_mitsui, direction:'借', amount:100000)
-EntryItemLine.create!(entry_item:e, subject:subject_salary, direction:'貸', amount:100000)
+#e = EntryItem.create!(entry_date:DateTime.strptime('20150802', '%Y%m%d'), explanation:'bonus')    
+#EntryItemLine.create!(entry_item:e, subject:subject_mitsui, direction:'借', amount:100000)
+#EntryItemLine.create!(entry_item:e, subject:subject_salary, direction:'貸', amount:100000)
 
 # ledgers/index?subject_id=3　　(三井住友銀行)
 #       entry_date    explanation     contra_subject  credit_amount   debit_amount

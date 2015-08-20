@@ -5,7 +5,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.text :description
       t.integer :subject_type
       t.integer :parent_id, null: true
-      t.boolean :frozen, :default => false
+      t.boolean :fixed, :default => false
       t.timestamps null: false
     end
   end

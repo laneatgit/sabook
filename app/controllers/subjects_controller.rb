@@ -1,10 +1,13 @@
 class SubjectsController < ApplicationController
   before_action :set_subject, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /subjects
   # GET /subjects.json
   def index
+    
     @subjects = Subject.all
+    
+    
   end
 
   # GET /subjects/1
@@ -70,5 +73,12 @@ class SubjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
       params.require(:subject).permit(:name, :description, :parent_subject_id, :level, :subject_type)
+    end
+    
+    def flat_tree(hash, depth = 0)
+      hash.each_with_object([]) do |(obj, v), results|
+        results << obj
+        results << flat_tree(v, depth + 1) if v.is_a?(Hash) && !v.empty?
+      end
     end
 end
