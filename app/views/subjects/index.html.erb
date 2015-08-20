@@ -23,7 +23,7 @@
        
         <td><%= subject.description %></td>
         
-        <% if subject.fixed %>
+        <% if subject.fixed or !subject.leaf? %>
           <td><%= number_to_currency(subject.ledger_amount, :locale => "jp") %></td>
         <%else%>
           <td><%= link_to number_to_currency(subject.ledger_amount, :locale => "jp") , subject_entry_item_lines_path(:subject_id => subject.id) %></td>

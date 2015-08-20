@@ -8,21 +8,7 @@
       <th>日付</th>
       <th>用途</th>
       <th>相手科目</th>
-      <%if @subject.subject_type == "流動資産"%>
-          <th>入金</th>
-          <th>出金</th>
-      <%elsif @subject.subject_type == "支出"%>
-          <th>費用</th>
-          <th>割引</th>
-      <%elsif @subject.subject_type == "収入"%>
-          <th>割引</th>
-          <th>収入</th>
-      <%elsif @subject.subject_type == "開始残高"%>
-          <th>割引</th>
-          <th>収入</th>
-      <%else%>
-          <% raise "wrong subject type"%>
-      <%end%>
+      <%=raw display_subject_two_column_headers(@subject) %>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -33,27 +19,7 @@
         <td><%= line.entry_item.entry_date %></td>
         <td><%= line.entry_item.explanation %></td>
         <td><%= line.subject.name %></td>
-
-        <%if @subject.subject_type == "流動資産" or @subject.subject_type == "支出"%>
-          <%if line.direction == '借' %>
-              <td>0</td>
-              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>           
-          <%else%>
-              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>
-              <td>0</td>
-          <%end%>
-        <%elsif @subject.subject_type == "収入" or @subject.subject_type == "開始残高"%>
-          <%if line.direction == '借' %>
-              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>
-              <td>0</td>
-          <%else%>
-             <td>0</td>
-              <td><%= number_to_currency(line.amount, :locale => 'jp') %></td>
-          <%end%>
-        <%else%>
-            <% raise "wrong subject type"%>
-        <%end%> 
-
+        <%=raw display_subject_amount_in_two_cells @subject,number_to_currency(line.amount, :locale => 'jp'), line.direction == '借' %>
         <td><%= link_to "Edit", edit_subject_entry_item_line_path(line,:subject_id=>@subject) %></td>
       </tr>
     <% end %>
