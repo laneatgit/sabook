@@ -26,3 +26,9 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+TODO:
+1. subject sort oder
+2. confirm cascading delete. (item containing legder amount must not be deleted.)
+3. add simple login confirmation
+4. publish to AWS
