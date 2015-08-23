@@ -2,17 +2,12 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @subject.name %>
+  <%= @subject.display_path %>
 </p>
 
 <p>
   <strong>Description:</strong>
   <%= @subject.description %>
-</p>
-
-<p>
-  <strong>Parent subject:</strong>
-  <%= display_name(@subject.parent_subject) %>
 </p>
 
 

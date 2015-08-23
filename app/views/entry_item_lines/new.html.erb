@@ -1,56 +1,8 @@
 <h1><%= @subject.name %></h1>
 
-<%= form_for [@subject,@entry_item_line] do |f| %>
-  <% if !@entry_item.nil? and @entry_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@entry_item.errors.count, "error") %> prohibited this entry_item from being saved:</h2>
+<%= render 'form' %>
 
-      <ul>
-      <% @entry_item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if !@entry_item_line.nil? and @entry_item_line.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@entry_item_line.errors.count, "error") %> prohibited this entry_item_line from being saved:</h2>
 
-      <ul>
-      <% @entry_item_line.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-   <%= fields_for :entry_item do |u| %>
-      <div class="field">
-        <%= u.label :entry_date %><br>
-        <%= u.date_select :entry_date %>
-      </div>
-      <div class="field">
-        <%= u.label :explanation %><br>
-        <%= u.text_area :explanation %>
-      </div>
-   <% end %>
-   
-   
-   
-   <div class="field">
-      <%= f.label :subject_id, "相手科目" %><br>
-      <%= f.collection_select :subject_id, Subject.all,:id,:name, include_blank: false %>
-   </div>
-   
-   <div class="field">
-      <%= f.label :amount, "金額" %><br>
-      <%= f.number_field :amount %>
-   </div> 
-   
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
 
 
 <%= link_to 'Back', subject_entry_item_lines_path(:subject_id=>@subject.id) %>

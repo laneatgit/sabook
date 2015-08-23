@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
   
   
-  resources :entry_item_lines
-  get 'ledger/:subject_id', to: 'ledger#index', as: 'ledger'
-  
+ 
+  resources :products
   resources :subjects
   
 
   resources :subjects do
-    resources :entry_item_lines
+    resources :entry_items
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

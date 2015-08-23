@@ -20,20 +20,14 @@
     <%= f.text_area :description %>
   </div>
   <% if @subject.new_record? %>
-    <div class="field">
-    <%= f.label :subject_type %><br>
-    <%= f.select :subject_type, Subject.subject_types %>
-    </div>
-  <%else%>
-    <div class="field">
-      <%= f.label :subject_type %><br>
-      <%= f.text_field :subject_type, disabled: true %>
-    </div>
-  <%end%>
+    
   <div class="field">
-    <%= f.label :parent_subject_id %><br>
-    <%= f.collection_select :parent_subject_id, Subject.where("level == 1 " ),:id,:name, include_blank: true %>
+    <%= f.label :parent_id %><br>
+    <%= f.collection_select :parent_id, Subject.all,:id,:name, include_blank: false %>
   </div>
+    
+  <%end%>
+
   <div class="actions">
     <%= f.submit %>
   </div>

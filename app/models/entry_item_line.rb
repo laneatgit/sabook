@@ -5,5 +5,9 @@ class EntryItemLine < ActiveRecord::Base
   
   validates :subject, presence:true
   validates :amount, numericality: { greater_than: 0 }
+
+  def credit?
+    return self.direction == '借'
+  end
     
 end

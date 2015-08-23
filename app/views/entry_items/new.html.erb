@@ -1,5 +1,4 @@
-<h1>New Entry Item</h1>
+<h1><%= @subject.name%></h1>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', ledger_path(:subject_id => @subject.id)  %>
+<%= link_to 'Back', subject_entry_items_path  %>

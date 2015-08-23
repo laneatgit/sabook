@@ -72,11 +72,15 @@ create_subjects(item,['医療保険','自動車保険','生命保険'])
 
 
 EntryItem.delete_all
-EntryItemLine.delete_all
 
-e = EntryItem.create!(entry_date:DateTime.strptime('20150701', '%Y%m%d'), explanation:'go shopping')
-EntryItemLine.create!(entry_item:e, subject:Subject.find_by(name:'書籍'), direction:'借', amount:32005)
-EntryItemLine.create!(entry_item:e, subject:Subject.find_by(name:'現金'), direction:'貸', amount:32005)
+
+e = EntryItem.create!(
+    entry_date:DateTime.strptime('20150701', '%Y%m%d'), 
+    explanation:'go shopping', 
+    credit_subject:Subject.find_by(name:'書籍'), 
+    debit_subject:Subject.find_by(name:'現金'), 
+    amount:32005)
+
 
 #e = EntryItem.create!(entry_date:DateTime.strptime('20150801', '%Y%m%d'), explanation:'go shopping')
 #EntryItemLine.create!(entry_item:e, subject:subject_daily_necessities, direction:'借', amount:1000)

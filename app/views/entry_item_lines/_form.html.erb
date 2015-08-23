@@ -1,8 +1,8 @@
+
 <%= form_for [@subject,@entry_item_line] do |f| %>
   <% if !@entry_item.nil? and @entry_item.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@entry_item.errors.count, "error") %> prohibited this entry_item from being saved:</h2>
-
       <ul>
       <% @entry_item.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,10 +10,10 @@
       </ul>
     </div>
   <% end %>
+
   <% if !@entry_item_line.nil? and @entry_item_line.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@entry_item_line.errors.count, "error") %> prohibited this entry_item_line from being saved:</h2>
-
       <ul>
       <% @entry_item_line.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -21,6 +21,8 @@
       </ul>
     </div>
   <% end %>
+
+
 
    <%= fields_for :entry_item do |u| %>
       <div class="field">
@@ -32,19 +34,25 @@
         <%= u.text_area :explanation %>
       </div>
    <% end %>
-   
-   
+      
    
    <div class="field">
       <%= f.label :subject_id, "相手科目" %><br>
-      <%= f.collection_select :subject_id, Subject.all,:id,:name, include_blank: false %>
+      <%= f.collection_select :subject_id, Subject.leaves,:id,:diplay_path  , include_blank: true %>
    </div>
-   
+
    <div class="field">
-      <%= f.label :amount, trading_title_by_direction(@subject.subject_type, @entry_item_line.direction) %><br>
-      <%= f.number_field :amount %>
+      <%= f.label :amount, subject_title_in_entry(@subject.subject_type,:is_credit=> true) %><br>
+      <%= f.number_field :amount, :name=>'credit_amount', :value => @entry_item_line.credit? ? 0 : @entry_item_line.amount %>
+   </div>  
+ 
+
+    <div class="field">
+      <%= f.label :amount, subject_title_in_entry(@subject.subject_type,:is_credit => false)%><br>
+      <%= f.number_field :amount, :name=>'debit_amount',:value => @entry_item_line.credit? ? @entry_item_line.amount : 0%>
    </div>  
    
+
   <div class="actions">
     <%= f.submit %>
   </div>

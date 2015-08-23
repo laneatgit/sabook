@@ -27,8 +27,13 @@ class SubjectsController < ApplicationController
   # POST /subjects
   # POST /subjects.json
   def create
-    @subject = Subject.new(subject_params)
 
+    @subject = Subject.new(subject_params)
+    parent = Subject.find(subject_params[:parent_id])
+    @subject.subject_type = parent.subject_type
+    parent.children << @subject
+
+    #raise @subject.errors.inspect
     respond_to do |format|
       if @subject.save
         format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
@@ -72,7 +77,7 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :description, :parent_subject_id, :level, :subject_type)
+      params.require(:subject).permit(:name, :description, :parent_id)
     end
     
     def flat_tree(hash, depth = 0)
