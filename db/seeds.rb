@@ -18,7 +18,7 @@ Subject.delete_all
 ########################
 # 資産
 ########################
-root = Subject.create!(name: '資産',  subject_type: 'asset', fixed: true)
+root = Subject.create!(name: '資産',  subject_type: 'asset', fixed: true, sort_order:1000000)
 current_asset = root.children.create!(name: '流動資産', subject_type: root.subject_type, fixed: true)
 current_asset.children.create!(name: '現金',description: '財布の中の現金', subject_type: root.subject_type)
 current_asset.children.create!(name: '当座預金',description: '当座預金', subject_type: root.subject_type)
@@ -26,12 +26,12 @@ current_asset.children.create!(name: '普通預金',description: '普通預金',
 ########################
 # 純資産
 ########################
-root = Subject.create!(name: '純資産',  subject_type: 'equity', fixed: true)
+root = Subject.create!(name: '純資産',  subject_type: 'equity', fixed: true, sort_order:2000000)
 root.children.create!(name: '開始残高',subject_type: root.subject_type)
 ########################
 # 収益
 ########################
-root = Subject.create!(name: '収益',  subject_type: 'income', fixed: true)
+root = Subject.create!(name: '収益',  subject_type: 'income', fixed: true, sort_order:3000000)
 root.children.create!(name: 'その他の収入',subject_type: root.subject_type)
 root.children.create!(name: 'ボーナス',subject_type: root.subject_type)
 root.children.create!(name: '給与',subject_type: root.subject_type)
@@ -40,13 +40,13 @@ root.children.create!(name: '贈与収入',subject_type: root.subject_type)
 ########################
 # 負債
 ########################
-root = Subject.create!(name: '負債',  subject_type: 'liability', fixed: true)
+root = Subject.create!(name: '負債',  subject_type: 'liability', fixed: true, sort_order:4000000)
 root.children.create!(name: 'クレジットカード',subject_type: root.subject_type)
 
 ########################
 # 費用
 ########################
-root = Subject.create!(name: '費用',  subject_type: 'expense', fixed: true)
+root = Subject.create!(name: '費用',  subject_type: 'expense', fixed: true, sort_order:5000000)
 create_subjects(root,['オンラインサービス','クリニング','ケーブルテレビ','コンピューター','その他','衣料品','医療費','義援金','教育','銀行手数料',
 '交通機関','購読','趣味','書籍','消耗品','食費','贈答','調整','電話','日用品'])
 

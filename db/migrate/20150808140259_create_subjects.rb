@@ -6,6 +6,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.integer :subject_type
       t.integer :parent_id, null: true
       t.boolean :fixed, :default => false
+      t.integer :sort_order
       t.timestamps null: false
     end
   end

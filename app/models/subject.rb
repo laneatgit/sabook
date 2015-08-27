@@ -7,8 +7,9 @@ class Subject < ActiveRecord::Base
   has_many :debit_entry_items, class_name: "EntryItem",foreign_key: "debit_subject_id", dependent: :destroy
   validates :name, :subject_type, presence:true
   validate :validate_parent
+  before_save :update_sort_order
 
-
+  
   def header_at_credit
     case subject_type
       when 'asset'
@@ -74,6 +75,24 @@ class Subject < ActiveRecord::Base
       errors.add(:parent_id, "can not be a child of subject has been used.")
     end
 
+  end
+  
+  def update_sort_order
+    
+    if self.parent != nil
+    
+      # find siblin with max sort roder and plus 1
+      max_sort_order =  self.parent.sort_order
+      
+      self.siblings.each do |t|
+        max_sort_order = t.sort_order if t.sort_order > max_sort_order
+      end
+      
+      
+     
+      
+      
+    end
   end
 
 end

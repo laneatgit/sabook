@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150823085322) do
     t.integer  "subject_type"
     t.integer  "parent_id"
     t.boolean  "fixed",        default: false
+    t.integer  "sort_order"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
