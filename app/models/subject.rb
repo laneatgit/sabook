@@ -81,17 +81,27 @@ class Subject < ActiveRecord::Base
     
     if self.parent != nil
     
-      # find siblin with max sort roder and plus 1
-      max_sort_order =  self.parent.sort_order
-      
-      self.siblings.each do |t|
-        max_sort_order = t.sort_order if t.sort_order > max_sort_order
+      my_depth = self.parent.depth + 1
+      parent_sort_order = self.parent.sort_order
+
+      max_sort_order =  parent_sort_order
+      self.parent.children.each do |t|
+        max_sort_order = t.sort_order if t.sort_order > max_sort_order and  t!= self
       end
-      
-      
-     
-      
-      
+
+      # parent:   01 00 00 00 ->depth = 0
+      # sibling:  01 01 00 00 ->depth = 1
+
+      # max_sort_order = 01 01 00 00
+      # lower_part_excluding_self = 10000
+      # upper_part = 010000 % 10000 
+      lower_part_excluding_self = 10 ** ((3 - my_depth) * 2 +1)
+      lower_part_excluding_self_2 = 10 ** ((3 - my_depth) * 2 )
+      upper_part = ((max_sort_order -parent_sort_order) % lower_part_excluding_self) + 1
+      whole_part = self.parent.sort_order + (upper_part * lower_part_excluding_self_2)
+
+      self.sort_order = whole_part
+
     end
   end
 
