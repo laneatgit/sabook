@@ -7,6 +7,7 @@ class Subject < ActiveRecord::Base
   has_many :debit_entry_items, class_name: "EntryItem",foreign_key: "debit_subject_id", dependent: :destroy
   validates :name, :subject_type, presence:true
   validate :validate_parent
+  validate :validate_depth
   before_save :update_sort_order
 
   
@@ -77,6 +78,23 @@ class Subject < ActiveRecord::Base
 
   end
   
+  def validate_depth
+    if self.parent != nil and self.parent >=3
+    errors.add(:parent_id, "depth can not be greater than 3.")
+    end
+  end
+  
+  def justify_sort_order(my_depth, max_order_at_my_depth)
+  
+      pos = my_depth * 2
+      justified_sort_order = max_order_at_my_depth.to_s.rjust(8, '0')
+      my_part = (justified_sort_order[pos,2].to_i + 1).to_s.rjust(2, '0')
+      justified_sort_order[pos] = my_part[0]
+      justified_sort_order[pos +1] = my_part[1]
+      return justified_sort_order
+      
+  end
+  
   def update_sort_order
     
     if self.parent != nil
@@ -85,22 +103,20 @@ class Subject < ActiveRecord::Base
       parent_sort_order = self.parent.sort_order
 
       max_sort_order =  parent_sort_order
-      self.parent.children.each do |t|
+      self.siblings.each do |t|
         max_sort_order = t.sort_order if t.sort_order > max_sort_order and  t!= self
       end
 
       # parent:   01 00 00 00 ->depth = 0
       # sibling:  01 01 00 00 ->depth = 1
 
-      # max_sort_order = 01 01 00 00
-      # lower_part_excluding_self = 10000
-      # upper_part = 010000 % 10000 
-      lower_part_excluding_self = 10 ** ((3 - my_depth) * 2 +1)
-      lower_part_excluding_self_2 = 10 ** ((3 - my_depth) * 2 )
-      upper_part = ((max_sort_order -parent_sort_order) % lower_part_excluding_self) + 1
-      whole_part = self.parent.sort_order + (upper_part * lower_part_excluding_self_2)
+      #raise justify_sort_order(1,1010000)
+      
+      justified_sort_order = justify_sort_order(my_depth,max_sort_order)
+      self.sort_order = justified_sort_order.to_i
+      
 
-      self.sort_order = whole_part
+      
 
     end
   end

@@ -23,7 +23,7 @@
     
   <div class="field">
     <%= f.label :parent_id %><br>
-    <%= f.collection_select :parent_id, Subject.all,:id,:name, include_blank: false %>
+    <%= f.collection_select :parent_id, Subject.order(:sort_order),:id,:display_path, include_blank: false %>
   </div>
     
   <%end%>

@@ -23,12 +23,12 @@
   <% if @subject == @entry_item.credit_subject %>
     <div class="field">
       <%= f.label :debit_subject_id, "相手科目" %><br>
-      <%= f.collection_select :debit_subject_id, Subject.leaves.where.not(id:@subject.id),:id,:display_path, include_blank: false %>
+      <%= f.collection_select :debit_subject_id, Subject.leaves.where.not(id:@subject.id).order(:sort_order),:id,:display_path, include_blank: false %>
    </div>
   <%else%>
     <div class="field">
       <%= f.label :credit_subject_id, "相手科目" %><br>
-      <%= f.collection_select :credit_subject_id, Subject.leaves.where.not(id:@subject.id),:id,:display_path, include_blank: false %>
+      <%= f.collection_select :credit_subject_id, Subject.leaves.where.not(id:@subject.id).order(:sort_order),:id,:display_path, include_blank: false %>
    </div>
   <%end%>
 
