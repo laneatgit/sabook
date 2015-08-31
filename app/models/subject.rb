@@ -79,7 +79,7 @@ class Subject < ActiveRecord::Base
   end
   
   def validate_depth
-    if self.parent != nil and self.parent >=3
+    if self.parent != nil and self.parent.depth >= 3
     errors.add(:parent_id, "depth can not be greater than 3.")
     end
   end

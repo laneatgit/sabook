@@ -7,14 +7,15 @@ def create_subjects(p, children)
   end
 end
 
+########################
+# User
+########################
+User.delete_all
+User.create!(name: 'kaikei',  password: '123Qwe', password_confirmation: '123Qwe')
+
+
+
 Subject.delete_all
-
-########################
-# Root Nodes
-########################
-
-###??? IMBLANCE
-
 ########################
 # 資産
 ########################
