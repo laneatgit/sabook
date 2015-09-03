@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Subjects</h1>
-<%= link_to 'New Subject', new_subject_path %>
-<table>
+<%= link_to "New Subject", new_subject_path, :class=>"btn btn-primary" %>
+<table class="table table-striped custab">
   <thead>
     <tr>
       <!--<th>Subject type</th>-->
@@ -30,9 +30,9 @@
           <td><%= link_to number_to_currency(subject.ledger_amount, :locale => "jp") , subject_entry_items_path(:subject_id => subject.id) %></td>
         <%end%>
         <td><%=subject.sort_order%></td>
-        <td><%= link_to 'Show', subject %></td>
-        <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
-        <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Show", subject, :class=>"btn btn-info"  %></td>
+        <td><%= link_to "Edit", edit_subject_path(subject), :class=>"btn btn-info" %></td>
+        <td><%= link_to "Destroy", subject, :class=>"btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %></td>
         
       </tr>
     <% end %>
